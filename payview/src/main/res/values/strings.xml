@@ -13,4 +13,5 @@
     <string name="cardmonth_error_text">You must enter 2-digit characters and you\'ll enter to number the most digit-value is \'12\'</string>
     <string name="cardcv_error_text">You must enter 3-digit characters</string>
     <string name="cardexpired_error_text">Your card has expired. Please enter the usage date correctly.</string>
+    <string name="cardmonth_not_valid_text">The month is not valid</string>
 </resources>

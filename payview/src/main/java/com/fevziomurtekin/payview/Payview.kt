@@ -45,6 +45,7 @@ class Payview : NestedScrollView, View.OnFocusChangeListener {
     private var cardMonthErrorText:String= resources.getString(R.string.cardmonth_error_text)
     private var cardCvErrorText:String= resources.getString(R.string.cardmonth_error_text)
     private var cardExpiredError:String= resources.getString(R.string.cardexpired_error_text)
+    private var cardMonthNotValid: String = resources.getString(R.string.cardmonth_not_valid_text)
     private var cardNameTextSize : Int = 14
     private var cardNoTextSize : Int = 14
     private var cardYearTextSize : Int = 13
@@ -525,13 +526,22 @@ class Payview : NestedScrollView, View.OnFocusChangeListener {
                 /** card month/card year compare to now date.*/
                 val nowMonth = Calendar.getInstance().get(Calendar.MONTH)
                 val nowYear = Calendar.getInstance().get(Calendar.YEAR).toString().substring(2,4).toInt()
-                return if(nowYear>tev_card_year.text.toString().toInt()
-                        || (nowYear==tev_card_year.text.toString().toInt()
-                                && nowMonth>=tev_card_month.text.toString().toInt())){
+                var valid = true
+                if (nowYear < tev_card_year.text.toString().toInt()) {
+                    tev_card_year.error = cardExpiredError
+                    valid = false
+                }
+                if (nowYear == tev_card_year.text.toString().toInt() &&
+                        nowMonth > tev_card_month.text.toString().toInt()) {
                     tev_card_year.error = cardExpiredError
                     tev_card_month.error = cardExpiredError
-                    false
-                }else true
+                    valid = false
+                }
+                if (tev_card_month.text.toString().toInt() > 12) {
+                    tev_card_month.error = cardMonthNotValid
+                    valid = false
+                }
+                return valid
             }
             else{
                 var valid = true
